@@ -1,7 +1,7 @@
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Marquee } from './components/Marquee';
-import { BIMServiceDetail } from './components/BIMServiceDetail';
+import { ServiceDetail } from './components/ServiceDetail';
 import { Process } from './components/Process';
 import { Testimonials } from './components/Testimonials';
 import { FAQ } from './components/FAQ';
@@ -10,6 +10,7 @@ import { Footer } from './components/Footer';
 import { ProjectPopup } from './components/ProjectPopup';
 import { ScrollProgress } from './components/ScrollProgress';
 import ServiceSection from './components/ServiceSection';
+import { services } from './data/services';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
         <Hero />
         <Marquee />
         <ServiceSection />
-        <BIMServiceDetail />
+        {services.map((service) => (
+          <ServiceDetail key={service.id} service={service} />
+        ))}
         <Process />
         <Testimonials />
         <FAQ />
