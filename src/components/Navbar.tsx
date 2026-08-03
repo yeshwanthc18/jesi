@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { NavDropdown } from "./NavDropdown";
+import { services } from "../data/services";
 
 const navLinks = [
-  { label: "BIM Services", href: "#bim-detail" },
   { label: "Process", href: "#process" },
   { label: "Clients", href: "#clients" },
   { label: "FAQ", href: "#faq" },
@@ -28,10 +29,6 @@ export function Navbar() {
   const textColor = scrolled
     ? "text-ink-800"
     : "text-white";
-
-  const subTextColor = scrolled
-    ? "text-ink-400"
-    : "text-white/70";
 
   return (
     <>
@@ -68,6 +65,8 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden items-center gap-7 md:flex">
+            <NavDropdown services={services} scrolled={scrolled} />
+
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -119,7 +118,8 @@ export function Navbar() {
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-40 bg-white md:hidden"
           >
-            <div className="flex h-full flex-col items-center justify-center gap-6">
+            <div className="flex h-full flex-col items-center justify-center gap-4 px-6 overflow-y-auto">
+              <MobileServicesAccordion />
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -127,7 +127,7 @@ export function Navbar() {
                   onClick={() => setOpen(false)}
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.06 }}
+                  transition={{ delay: (i + services.length) * 0.05 }}
                   className="font-display text-2xl font-medium text-ink-800"
                 >
                   {link.label}
@@ -149,5 +149,70 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function MobileServicesAccordion() {
+  const [expanded, setExpanded] = useState<string | null>(services[0]?.label ?? null);
+
+  return (
+    <div className="w-full max-w-xs">
+      <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-400">
+        Services
+      </p>
+      {services.map((service) => {
+        const isOpen = expanded === service.label;
+        const hasSubs = (service.subServices?.length ?? 0) > 0;
+        return (
+          <div key={service.label} className="border-b border-ink-100">
+            <button
+              onClick={() => setExpanded(isOpen ? null : service.label)}
+              className="flex w-full items-center justify-between py-2.5 text-left"
+            >
+              <a
+                href={service.href}
+                onClick={(e) => {
+                  if (hasSubs) {
+                    e.preventDefault();
+                    setExpanded(isOpen ? null : service.label);
+                  }
+                }}
+                className="font-display text-xl font-medium text-ink-800"
+              >
+                {service.label}
+              </a>
+              {hasSubs && (
+                <ChevronDown
+                  className={`h-5 w-5 text-brand-red transition-transform duration-200 ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                />
+              )}
+            </button>
+            <AnimatePresence initial={false}>
+              {isOpen && hasSubs && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  {service.subServices!.map((sub) => (
+                    <a
+                      key={sub.label}
+                      href={sub.href}
+                      className="block py-2 pl-4 text-sm text-ink-500 transition-colors hover:text-brand-red"
+                    >
+                      {sub.label}
+                    </a>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
   );
 }
