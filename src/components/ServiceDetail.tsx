@@ -11,36 +11,52 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
   const { ref, inView } = useReveal();
 
   return (
-    <section id={`service-${service.id}`} className="bg-ink-800 py-16 lg:py-24">
+    <section
+      id={`service-${service.id}`}
+      className="bg-[#fbfbfb] py-16 lg:py-24"
+    >
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
-        <div className="flex overflow-hidden rounded-2xl border border-ink-600/30">
-          {/* Gradient rail bar using only approved colors */}
+        <div className="flex overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
+          {/* Gradient Rail */}
           <div
             className="w-1 shrink-0"
-            style={{ background: 'linear-gradient(to bottom, #A91E2D 33%, #F5A623 66%, #4A4A4A 100%)' }}
+            style={{
+              background:
+                'linear-gradient(to bottom, #A91E2D 33%, #F5A623 66%, #4A4A4A 100%)',
+            }}
           />
 
           <div className="flex-1 p-6 sm:p-8 lg:p-12">
-            {/* Intro block */}
-            <div ref={ref} className={`grid gap-8 lg:grid-cols-2 lg:gap-12 ${inView ? 'animate-fade-up' : 'opacity-0'}`}>
+            {/* Intro */}
+            <div
+              ref={ref}
+              className={`grid gap-8 lg:grid-cols-2 lg:gap-12 ${
+                inView ? 'animate-fade-up' : 'opacity-0'
+              }`}
+            >
               <div>
-                <span className="mb-3 inline-block font-mono text-xs uppercase tracking-[0.14em] text-amber">{service.eyebrow}</span>
-                <h3 className="font-display text-2xl font-semibold leading-tight text-white lg:text-3xl">
+                <span className="mb-3 inline-block font-mono text-xs uppercase tracking-[0.14em] text-[#A91E2D]">
+                  {service.eyebrow}
+                </span>
+
+                <h3 className="font-display text-2xl font-semibold leading-tight text-neutral-900 lg:text-3xl">
                   {service.heading}
                 </h3>
               </div>
+
               <div>
-                <p className="text-sm leading-relaxed text-ink-300 lg:text-base">
+                <p className="text-sm leading-relaxed text-neutral-600 lg:text-base">
                   {service.intro}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-ink-300 lg:text-base">
+
+                <p className="mt-4 text-sm leading-relaxed text-neutral-600 lg:text-base">
                   {service.body}
                 </p>
               </div>
             </div>
 
-            {/* Stat strip */}
-            <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-ink-600/30 lg:grid-cols-4">
+            {/* Stats */}
+            <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-neutral-200 bg-neutral-200 lg:grid-cols-4">
               {service.stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -48,13 +64,19 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="bg-ink-900 p-5"
+                  className="bg-neutral-50 p-5"
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink-400">{stat.label}</span>
-                  <div className="mt-1.5 font-display text-2xl font-extrabold tracking-tight text-brand-red">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-neutral-500">
+                    {stat.label}
+                  </span>
+
+                  <div className="mt-2 font-display text-2xl font-extrabold tracking-tight text-[#A91E2D]">
                     {stat.value}
                   </div>
-                  <p className="mt-1.5 text-xs leading-snug text-ink-400">{stat.note}</p>
+
+                  <p className="mt-2 text-xs leading-snug text-neutral-500">
+                    {stat.note}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -65,7 +87,7 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="mt-10 overflow-hidden rounded-lg border border-ink-600/30"
+              className="mt-10 overflow-hidden rounded-xl border border-neutral-200"
             >
               <img
                 src={service.imageUrl}
@@ -79,6 +101,7 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
             {/* Tools */}
             <div className="mt-12">
               <SectionLabel text="Tools we work in" />
+
               <div className="flex flex-wrap gap-2">
                 {service.tools.map((tool, i) => (
                   <motion.span
@@ -87,7 +110,7 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.03 }}
-                    className="rounded border border-ink-600/40 bg-ink-700 px-3.5 py-1.5 font-mono text-xs text-ink-300 transition-colors hover:border-amber hover:text-amber"
+                    className="rounded-lg border border-neutral-200 bg-white px-3.5 py-2 font-mono text-xs text-neutral-700 transition-all duration-300 hover:border-[#A91E2D] hover:bg-[#A91E2D]/5 hover:text-[#A91E2D]"
                   >
                     {tool}
                   </motion.span>
@@ -95,26 +118,31 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
               </div>
             </div>
 
-            {/* CTA strip */}
+            {/* CTA */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="mt-12 flex flex-col items-start justify-between gap-4 rounded-lg border border-ink-600/30 bg-ink-700 p-7 sm:flex-row sm:items-center lg:p-8"
+              className="mt-12 flex flex-col items-start justify-between gap-5 rounded-xl border border-neutral-200 bg-neutral-50 p-7 sm:flex-row sm:items-center lg:p-8"
             >
               <div>
-                <h4 className="font-display text-lg font-bold text-white">{service.ctaTitle}</h4>
-                <p className="mt-1 text-sm text-ink-300">
+                <h4 className="font-display text-lg font-bold text-neutral-900">
+                  {service.ctaTitle}
+                </h4>
+
+                <p className="mt-2 text-sm text-neutral-600">
                   {service.ctaBody}
                 </p>
               </div>
+
               <a
                 href="#contact"
-                className="group inline-flex shrink-0 items-center gap-2 rounded bg-brand-red px-6 py-3 font-display text-sm font-semibold text-white transition-colors hover:bg-amber hover:text-ink-800"
+                className="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#A91E2D] px-6 py-3 font-display text-sm font-semibold text-white transition-all duration-300 hover:bg-[#F5A623] hover:text-neutral-900"
               >
                 {service.ctaButton}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </motion.div>
           </div>
@@ -127,8 +155,11 @@ export function ServiceDetail({ service }: ServiceDetailProps) {
 function SectionLabel({ text }: { text: string }) {
   return (
     <div className="mb-5 flex items-center gap-3">
-      <span className="font-mono text-xs uppercase tracking-[0.14em] text-ink-400">{text}</span>
-      <span className="h-px flex-1 bg-ink-600/30" />
+      <span className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-500">
+        {text}
+      </span>
+
+      <span className="h-px flex-1 bg-neutral-200" />
     </div>
   );
 }

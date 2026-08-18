@@ -13,16 +13,11 @@ import img2 from "/images/img2.png";
 import img3 from "/images/img3.png";
 import img4 from "/images/img4.png";
 import img5 from "/images/img5.png";
-import img6 from "/images/img6.png";
-import img7 from "/images/img7.png";
-import img8 from "/images/img8.png";
-import img9 from "/images/img9.png";
-import img10 from "/images/img10.png";
 import { ArrowRight } from "lucide-react";
 
 interface StepData {
-  lod: string; // "100" .. "500"
-  stage: string; // short eyebrow, e.g. "Conceptual"
+  lod: string; // step number, e.g. "01"
+  stage: string; // short eyebrow, e.g. "Planning"
   title: string;
   bgColor: string;
   textColor: string;
@@ -34,212 +29,222 @@ interface StepData {
   featured?: boolean;
 }
 
-// Five steps, one per LOD tier (100 -> 500). Every card shares the same
-// 4-up grid shape so alignment stays identical across the whole stack.
+// Five services, one per stage of the BIM delivery pipeline.
+// Every card shares the same 4-up grid shape so alignment stays identical
+// across the whole stack.
 const stepsData: StepData[] = [
   {
-    lod: "100",
-    stage: "Conceptual",
-    title: "LOD 100 — Massing & Feasibility",
+    lod: "01",
+    stage: "Planning",
+    title: "Planning & Design",
     bgColor: "bg-[#0B2545]",
     textColor: "text-white",
-    features: ["Conceptual Massing", "Early Cost Range", "Spatial Allocation"],
+    features: [
+      "Coordinated 3D Models (Arch / Struct / MEP)",
+      "Clash Detection & Coordination Reports",
+      "LOD 100 to LOD 500 Models",
+    ],
     description:
-      "At LOD 100 we block out generic system massing and approximate equipment sizes to establish spatial allocation early — giving you a defensible feasibility study and early cost range before design commitments are made.",
+      "We establish a single source of truth for your project. Working from accurate site context, our architectural, structural and MEP teams author intelligent 3D models in tools such as Revit, then coordinate them so every discipline aligns before a single drawing is issued.",
     bgImageUrl: img1,
-    cta: "Get a Feasibility Estimate",
+    cta: "Start a Coordination Review",
     gridItems: [
       {
         id: 1,
-        name: "Conceptual Volumes",
-        tag: "Massing",
+        name: "Capture the Site",
+        tag: "Survey conditions with reality capture & GIS",
         img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=500&q=80",
       },
       {
         id: 2,
-        name: "Early Cost Range",
-        tag: "Estimate",
-        img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        id: 3,
-        name: "Space Allocation",
-        tag: "Spatial",
+        name: "Explore Options",
+        tag: "Test massing & design alternatives in 3D",
         img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=500&q=80",
       },
       {
-        id: 4,
-        name: "Owner Sign-off",
-        tag: "Feasibility",
-        img: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=500&q=80",
-      },
-    ],
-  },
-
-  {
-    lod: "200",
-    stage: "Schematic",
-    title: "LOD 200 — Schematic Design",
-    bgColor: "bg-gradient-to-b from-[#103B4A] to-[#071B28]",
-    textColor: "text-white",
-    features: ["System Routing", "Equipment Placement", "Owner Design Review"],
-    description:
-      "LOD 200 develops approximate geometry into real system routing and equipment placement, giving your design team something concrete to review and iterate on before construction documents begin.",
-    bgImageUrl: img2,
-    cta: "Request Schematic Review",
-    gridItems: [
-      {
-        id: 1,
-        name: "System Routing",
-        tag: "Routing",
-        img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        id: 2,
-        name: "Placement Study",
-        tag: "Equipment",
-        img: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=500&q=80",
-      },
-      {
         id: 3,
-        name: "Design Development",
-        tag: "Review",
-        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        id: 4,
-        name: "Approximate Sizing",
-        tag: "Geometry",
+        name: "Build the Models",
+        tag: "Architecture, structure & MEP in BIM",
         img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=500&q=80",
       },
-    ],
-  },
-
-  {
-    lod: "300",
-    stage: "Coordinated",
-    title: "LOD 300 — Coordinated Model",
-    bgColor: "bg-[#6A1B1B]",
-    textColor: "text-white",
-    features: [
-      "Fully Coordinated Model",
-      "Zero Unresolved Clashes",
-      "Permit-Ready Documentation",
-    ],
-    description:
-      "LOD 300 is where the model becomes buildable: precise, fully coordinated geometry across structure, architecture, and MEP with zero unresolved clashes — ready to submit for permit and hand to your subcontractors.",
-    bgImageUrl: img3,
-    cta: "Start Free Coordination Pilot",
-    featured: true,
-    gridItems: [
-      {
-        id: 1,
-        name: "3D Coordination",
-        tag: "Federated",
-        img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        id: 2,
-        name: "Zero Unresolved Clashes",
-        tag: "Clash-Free",
-        img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=500&q=80",
-      },
-      {
-        id: 3,
-        name: "Component & Assembly",
-        tag: "Revit",
-        img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=500&q=80",
-      },
       {
         id: 4,
-        name: "Subcontractor Ready",
-        tag: "Permit Set",
+        name: "Coordinate & Document",
+        tag: "Detect clashes, review, and issue drawing sets",
         img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80",
       },
     ],
   },
-
-  {
-    lod: "400",
+    {
+    lod: "02",
     stage: "Fabrication",
-    title: "LOD 400 — Fabrication Detail",
-    bgColor: "bg-[#0D5C4A]",
+    title: "Construction & Fabrication",
+    bgColor: "bg-[#6A1B1B]",
     textColor: "text-white",
     features: [
-      "Fabrication-Level Detail",
-      "Spool & Shop Drawings",
-      "Prefab & Install Ready",
+      "Fabrication-Level Model Geometry & Metadata",
+      "Shop & Fabrication Drawings",
+      "BOM Linkage & As-Built Status Updates",
     ],
     description:
-      "At LOD 400 we add fabrication-level detail — connection types, hanger locations, and spool drawings — so your shop can go straight from model to prefab and install without translation loss.",
-    bgImageUrl: img4,
+      "We bridge design and the factory floor. From the fully coordinated model we extract fabrication-level detail and generate the precise drawings and machine files your fabricators need — keeping every output linked back to the model and your bill of materials.",
+    bgImageUrl: img3,
     cta: "Request Shop Drawings",
     gridItems: [
       {
         id: 1,
-        name: "Spool Drawings",
-        tag: "Spool",
+        name: "Start Coordinated",
+        tag: "Begin from a clash-free, coordinated model",
+        img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        id: 2,
+        name: "Extract for Fabrication",
+        tag: "Pull manufacturing-level geometry & data",
+        img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        id: 3,
+        name: "Produce Outputs",
+        tag: "Shop drawings, CNC files & material lists",
+        img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        id: 4,
+        name: "Track As-Built",
+        tag: "Feed fabrication progress back into the model",
+        img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80",
+      },
+    ],
+  },
+    {
+    lod: "03",
+    stage: "Simulation",
+    title: "Construction Simulation & Quantification",
+    bgColor: "bg-[#0D5C4A]",
+    textColor: "text-white",
+    features: [
+      "Phased / Sequenced 4D Model",
+      "Site Logistics & Sequencing Analysis",
+      "Quantity Take-Offs (5D) for Estimating",
+    ],
+    description:
+      "Using 4D sequencing and automated takeoffs, we simulate construction schedules and produce accurate material and cost quantities to optimize logistics and cashflow. Visual simulations and quantified model data help stakeholders validate sequencing, reduce site conflicts, and make informed procurement decisions.",
+    bgImageUrl: img4,
+    cta: "Simulate Your Schedule",
+    gridItems: [
+      {
+        id: 1,
+        name: "Phase the Model",
+        tag: "Tag elements by construction stage",
         img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=80",
       },
       {
         id: 2,
-        name: "Hanger & Connection Detail",
-        tag: "Connections",
+        name: "Link to Schedule",
+        tag: "Connect elements to the programme (4D)",
         img: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=500&q=80",
       },
       {
         id: 3,
-        name: "Shop Drawing Set",
-        tag: "Prefab",
+        name: "Simulate the Build",
+        tag: "Test sequences & spot bottlenecks",
         img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=500&q=80",
       },
       {
         id: 4,
-        name: "Installation Ready",
-        tag: "Install",
+        name: "Quantify",
+        tag: "Accurate quantities for estimating (5D)",
         img: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=500&q=80",
       },
     ],
   },
 
   {
-    lod: "500",
-    stage: "As-Built",
-    title: "LOD 500 — As-Built & Handover",
-    bgColor: "bg-gradient-to-b from-[#2B2140] to-[#120C1F]",
+    lod: "04",
+    stage: "Modeling",
+    title: "Parametric Revit Family Creation",
+    bgColor: "bg-gradient-to-b from-[#103B4A] to-[#071B28]",
     textColor: "text-white",
     features: [
-      "Site-Verified As-Built",
-      "Embedded O&M Data",
-      "FM & Digital Twin Ready",
+      "Custom Parametric Revit Families",
+      "Type & Instance Parameter Sets",
+      "MEP Connectors & Embedded Data",
     ],
     description:
-      "LOD 500 captures the as-built condition: site-verified geometry with O&M data embedded directly in the model, delivered ready for FM handover and digital twin operations.",
-    bgImageUrl: img5,
-    cta: "Request As-Built Update",
+      "We produce flexible, performance-driven Revit families that capture manufacturer details, parameter sets, and BIM data for seamless project integration. These parametric components improve model accuracy, speed design iterations, and support downstream scheduling, costing, and facilities management.",
+    bgImageUrl: img2,
+    cta: "Request a Custom Family",
     gridItems: [
       {
         id: 1,
-        name: "Site-Verified Model",
-        tag: "As-Built",
+        name: "Pick the Template",
+        tag: "Start from the right family type",
+        img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        id: 2,
+        name: "Set the Framework",
+        tag: "Reference planes & driving dimensions",
+        img: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        id: 3,
+        name: "Build & Parameterise",
+        tag: "Add geometry, parameters & connectors",
+        img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=500&q=80",
+      },
+      {
+        id: 4,
+        name: "Test & Deploy",
+        tag: "Flex the component, then load it into projects",
+        img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=500&q=80",
+      },
+    ],
+  },
+
+
+
+
+
+  {
+    lod: "05",
+    stage: "Operations",
+    title: "Operation & Maintenance",
+    bgColor: "bg-gradient-to-b from-[#2B2140] to-[#120C1F]",
+    textColor: "text-white",
+    features: [
+      "Verified As-Built / Handover Model",
+      "COBie / Structured Data Deliverables",
+      "FM / CAFM-Ready Model Publication",
+    ],
+    description:
+      "We transform as-built BIM into an asset management tool with embedded O&M manuals, lifecycle data, and tag-based asset schedules for efficient facility operations. Centralized model information supports preventive maintenance, faster troubleshooting, and extended asset life while reducing operational costs.",
+    bgImageUrl: img5,
+    cta: "Plan Your FM Handover",
+    gridItems: [
+      {
+        id: 1,
+        name: "Capture As-Built",
+        tag: "Record true handover conditions & markups",
         img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=500&q=80",
       },
       {
         id: 2,
-        name: "Embedded Parameters",
-        tag: "O&M Data",
+        name: "Attach Asset Data",
+        tag: "Manuals, spare parts & maintenance intervals",
         img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80",
       },
       {
         id: 3,
-        name: "Facility Management",
-        tag: "FM Handover",
+        name: "Publish to FM",
+        tag: "Deliver into your facilities (CAFM) platform",
         img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=500&q=80",
       },
       {
         id: 4,
         name: "Ready for Operations",
-        tag: "Digital Twin",
+        tag: "Digital twin & lifecycle-ready model",
         img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=500&q=80",
       },
     ],
@@ -364,7 +369,7 @@ function CardSection({
         <div className="lg:col-span-5 space-y-6">
           <div className="flex items-center gap-3">
             <span className="text-xs font-semibold uppercase tracking-widest opacity-60">
-              LOD {step.lod} · {step.stage}
+              {step.lod} · {step.stage}
             </span>
             {step.featured && (
               <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">
@@ -397,9 +402,10 @@ function CardSection({
         </div>
 
         <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-4 sm:gap-6 lg:gap-5 lg:pt-4">
+          <p className="text-xl font-bold"> Key Deliverables </p>
           {step.features.map((feature, idx) => (
             <div key={idx} className="flex items-center gap-3">
-              <span className="text-base text-white/50">✦</span>
+              {/* <span className="text-base text-white/50">✦</span> */}
               <span className="text-base md:text-lg font-medium opacity-90">
                 {feature}
               </span>
@@ -416,8 +422,8 @@ function CardSection({
 
       {/* Same 4-up grid shape on every card so alignment stays identical */}
       <div className="max-w-7xl w-full mx-auto pb-6 relative z-10">
-        <p className="text-xs font-semibold uppercase tracking-widest opacity-75 mb-4">
-          {step.title}
+        <p className="text-xl  font-semibold uppercase tracking-widest opacity-75 mb-4">
+          How We Work
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {step.gridItems.map((item) => (
@@ -436,9 +442,12 @@ function CardSection({
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-4 left-4 z-10">
                 <div className="text-[10px] uppercase tracking-wider text-blue-300">
-                  {item.tag}
+                  {item.id}
                 </div>
                 <div className="font-semibold">{item.name}</div>
+                <div className="text-xs opacity-75 mt-1 max-w-[9rem]">
+                  {item.tag}
+                </div>
               </div>
             </motion.div>
           ))}

@@ -22,9 +22,7 @@ function App() {
         <Hero />
         <Marquee />
         <ServiceSection />
-        {services.map((service) => (
-          <ServiceDetail key={service.id} service={service} />
-        ))}
+       <ServiceDetail service={services[0]} />
         <Process />
         <Testimonials />
         <FAQ />
