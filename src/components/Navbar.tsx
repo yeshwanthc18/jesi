@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { NavDropdown } from "./NavDropdown";
-import { services } from "../data/services";
+import { Link } from "react-router-dom";
+import { NavDropdown, type NavServiceItem } from "./NavDropdown";
+import { allContent } from "../lib/content";
 
 const navLinks = [
   { label: "Process", href: "#process" },
@@ -10,25 +11,20 @@ const navLinks = [
   { label: "FAQ", href: "#faq" },
 ];
 
+export function mapContentToNavItems(): NavServiceItem[] {
+  return allContent.map((s) => ({
+    label: s.label,
+    href: s.navHref,
+    subServices: s.subServices,
+  }));
+}
+
 export function Navbar() {
   const scrolled = true;
   const [open, setOpen] = useState(false);
 
-//  useEffect(() => {
-//   const onScroll = () => {
-//     setScrolled(window.scrollY > 0);
-//   };
-
-//   onScroll();
-
-//   window.addEventListener("scroll", onScroll, { passive: true });
-
-//   return () => window.removeEventListener("scroll", onScroll);
-// }, []);
-
-  const textColor = scrolled
-    ? "text-ink-800"
-    : "text-white";
+  const textColor = scrolled ? "text-ink-800" : "text-white";
+  const navServiceItems = mapContentToNavItems();
 
   return (
     <>
@@ -41,31 +37,17 @@ export function Navbar() {
       >
         <nav className="mx-auto flex h-20 max-w-[1400px] items-center justify-between px-6 lg:px-10">
           {/* Logo */}
-          <a href="#top" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <img
-              src="/logo.png" 
+              src="/logo.png"
               alt="JES"
               className="h-11 w-auto"
             />
-
-            {/* <div className="flex flex-col leading-none">
-              <span
-                className={`font-display text-xl font-bold transition-colors duration-300 ${textColor}`}
-              >
-                JES
-              </span>
-
-              <span
-                className={`hidden text-xs sm:block transition-colors duration-300 ${subTextColor}`}
-              >
-                BIM Services
-              </span>
-            </div> */}
-          </a>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden items-center gap-7 md:flex">
-            <NavDropdown services={services} scrolled={scrolled} />
+            <NavDropdown services={navServiceItems} scrolled={scrolled} />
 
             {navLinks.map((link) => (
               <a
@@ -81,8 +63,8 @@ export function Navbar() {
               </a>
             ))}
 
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className={`rounded px-5 py-2 text-sm font-semibold transition-all duration-300 ${
                 scrolled
                   ? "bg-brand-red text-white hover:bg-ink-800"
@@ -90,7 +72,7 @@ export function Navbar() {
               }`}
             >
               Free BIM Pilot →
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,11 +81,7 @@ export function Navbar() {
             aria-label="Toggle menu"
             className={`transition-colors duration-300 md:hidden ${textColor}`}
           >
-            {open ? (
-              <X className="h-7 w-7" />
-            ) : (
-              <Menu className="h-7 w-7" />
-            )}
+            {open ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
           </button>
         </nav>
       </header>
@@ -119,7 +97,7 @@ export function Navbar() {
             className="fixed inset-0 z-40 bg-white md:hidden"
           >
             <div className="flex h-full flex-col items-center justify-center gap-4 px-6 overflow-y-auto">
-              <MobileServicesAccordion />
+              <MobileServicesAccordion services={navServiceItems} onNavigate={() => setOpen(false)} />
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -127,23 +105,27 @@ export function Navbar() {
                   onClick={() => setOpen(false)}
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (i + services.length) * 0.05 }}
+                  transition={{ delay: (i + navServiceItems.length) * 0.05 }}
                   className="font-display text-2xl font-medium text-ink-800"
                 >
                   {link.label}
                 </motion.a>
               ))}
 
-              <motion.a
-                href="#contact"
-                onClick={() => setOpen(false)}
+              <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.06 }}
-                className="mt-4 rounded bg-brand-red px-8 py-3 text-sm font-semibold text-white"
+                className="mt-4"
               >
-                Free BIM Pilot →
-              </motion.a>
+                <Link
+                  to="/contact"
+                  onClick={() => setOpen(false)}
+                  className="rounded bg-brand-red px-8 py-3 text-sm font-semibold text-white"
+                >
+                  Free BIM Pilot →
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         )}
@@ -152,7 +134,7 @@ export function Navbar() {
   );
 }
 
-function MobileServicesAccordion() {
+function MobileServicesAccordion({ services, onNavigate }: { services: NavServiceItem[]; onNavigate: () => void }) {
   const [expanded, setExpanded] = useState<string | null>(services[0]?.label ?? null);
 
   return (
@@ -165,30 +147,29 @@ function MobileServicesAccordion() {
         const hasSubs = (service.subServices?.length ?? 0) > 0;
         return (
           <div key={service.label} className="border-b border-ink-100">
-            <button
-              onClick={() => setExpanded(isOpen ? null : service.label)}
-              className="flex w-full items-center justify-between py-2.5 text-left"
-            >
-              <a
-                href={service.href}
-                onClick={(e) => {
-                  if (hasSubs) {
-                    e.preventDefault();
-                    setExpanded(isOpen ? null : service.label);
-                  }
+            <div className="flex w-full items-center justify-between py-2.5 text-left">
+              <Link
+                to={service.href}
+                onClick={() => {
+                  if (!hasSubs) onNavigate();
                 }}
                 className="font-display text-xl font-medium text-ink-800"
               >
                 {service.label}
-              </a>
+              </Link>
               {hasSubs && (
-                <ChevronDown
-                  className={`h-5 w-5 text-brand-red transition-transform duration-200 ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                />
+                <button
+                  onClick={() => setExpanded(isOpen ? null : service.label)}
+                  aria-label="Toggle sub-services"
+                >
+                  <ChevronDown
+                    className={`h-5 w-5 text-brand-red transition-transform duration-200 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
               )}
-            </button>
+            </div>
             <AnimatePresence initial={false}>
               {isOpen && hasSubs && (
                 <motion.div
@@ -199,13 +180,14 @@ function MobileServicesAccordion() {
                   className="overflow-hidden"
                 >
                   {service.subServices!.map((sub) => (
-                    <a
+                    <Link
                       key={sub.label}
-                      href={sub.href}
+                      to={sub.href}
+                      onClick={() => onNavigate()}
                       className="block py-2 pl-4 text-sm text-ink-500 transition-colors hover:text-brand-red"
                     >
                       {sub.label}
-                    </a>
+                    </Link>
                   ))}
                 </motion.div>
               )}

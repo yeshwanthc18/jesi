@@ -1,8 +1,13 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useReveal } from '../hooks/useReveal';
+import type { ServiceContent } from '../lib/content';
 
-export function Hero() {
+interface HeroProps {
+  content: ServiceContent;
+}
+
+export function Hero({ content }: HeroProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -16,12 +21,11 @@ export function Hero() {
 
   const { ref: revealRef, inView } = useReveal();
 
+  const { hero } = content;
+
   return (
     <section
       ref={ref}
-      // min-h-screen (not h-screen) so if content ever runs taller than the
-      // viewport — common on laptop screens with less vertical room than a
-      // desktop monitor — the section grows instead of clipping content.
       className="relative min-h-screen min-h-[640px] w-full overflow-hidden bg-ink-800"
     >
       {/* Parallax Background Video */}
@@ -67,15 +71,12 @@ export function Hero() {
             className="mb-4 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.14em] text-brand-red lg:mb-5"
           >
             <span className="block h-px w-8 bg-brand-red" />
-            BIM Modeling Services — LOD 100–500 · Revit MEP
+            {hero.eyebrowText}
           </motion.div>
 
-          {/* Headline — capped lower at lg/xl (typical laptop widths) so the
-              full hero fits comfortably on a ~700-850px tall laptop viewport;
-              the biggest size is reserved for 2xl, which pairs with larger
-              external displays that also tend to have more vertical room. */}
+          {/* Headline */}
           <h1 className="font-display text-[2.5rem] font-extrabold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-[4.25rem] xl:text-[5rem] 2xl:text-[6.5rem]">
-            {'BIM models,'.split('').map((char, i) => (
+            {hero.headlineLine1.split('').map((char, i) => (
               <motion.span
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -93,7 +94,7 @@ export function Hero() {
               transition={{ duration: 0.5, delay: 0.8 }}
               className="text-brand-red inline-block"
             >
-              delivered.
+              {hero.headlineLine2}
             </motion.span>
           </h1>
 
@@ -104,10 +105,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 1 }}
             className="mt-5 max-w-xl text-base leading-relaxed text-ink-200 lg:mt-4 lg:text-base xl:text-lg"
           >
-            We build federated MEP BIM models that combine mechanical, electrical,
-            and plumbing systems into a single, coordinated Revit environment —
-            clash-free, mapped to your standards, and delivered cloud-ready on
-            BIM 360 or ACC.
+            {hero.subcopy}
           </motion.p>
 
           {/* Stats */}
@@ -117,11 +115,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 1.2 }}
             className="mt-8 flex flex-col gap-6 sm:flex-row sm:gap-10 lg:mt-6 xl:gap-12"
           >
-            {[
-              { n: 'LOD', suffix: '100–500', label: 'Full range from conceptual massing to as-built FM handover' },
-              { n: '72', suffix: 'hrs', label: 'Average turnaround for standard BIM coordination projects' },
-              { n: '0', suffix: '', label: 'Unresolved clashes in models before delivery — guaranteed' },
-            ].map((stat, i) => (
+            {hero.stats.map((stat, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -150,14 +144,14 @@ export function Hero() {
               href="#contact"
               className="group inline-flex items-center gap-2 rounded bg-brand-red px-7 py-3 font-display text-sm font-semibold text-white transition-all duration-300 hover:bg-ink-700 hover:shadow-2xl"
             >
-              Start a free BIM pilot
+              {hero.primaryCtaLabel}
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </a>
             <a
-              href="#bim-detail"
+              href={hero.secondaryCtaHref}
               className="group inline-flex items-center gap-2 rounded border border-ink-300/30 px-7 py-3 font-display text-sm font-medium text-ink-200 transition-all duration-300 hover:border-white hover:text-white"
             >
-              Explore BIM services
+              {hero.secondaryCtaLabel}
             </a>
           </motion.div>
         </div>

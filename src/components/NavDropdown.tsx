@@ -1,19 +1,25 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { Service } from '../data/services';
+import { Link } from 'react-router-dom';
 
-interface NavDropdownProps {
-  services: Service[];
-  scrolled: boolean;
+export interface NavServiceItem {
+  label: string;
+  href: string;
+  subServices?: { label: string; href: string }[];
 }
 
-export function NavDropdown({ services, scrolled }: NavDropdownProps) {
+interface NavDropdownProps {
+  services: NavServiceItem[];
+  scrolled: boolean;
+  onNavigate?: () => void;
+}
+
+export function NavDropdown({ services, scrolled, onNavigate }: NavDropdownProps) {
   const [open, setOpen] = useState(false);
-  const [activeService, setActiveService] = useState<Service | null>(null);
+  const [activeService, setActiveService] = useState<NavServiceItem | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -24,7 +30,6 @@ export function NavDropdown({ services, scrolled }: NavDropdownProps) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
-  // Default active service to first one with subServices
   useEffect(() => {
     if (open && !activeService) {
       setActiveService(services[0] ?? null);
@@ -62,7 +67,7 @@ export function NavDropdown({ services, scrolled }: NavDropdownProps) {
             className="absolute left-0 top-full z-50 mt-3 flex min-w-[520px] overflow-hidden rounded-xl border border-ink-200 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.12)]"
           >
             {/* Left column — service list */}
-            <div className="w-[200px] shrink-0 border-r border-ink-100 bg-ink-50 py-2">
+            <div className="w-[220px] shrink-0 border-r border-ink-100 bg-ink-50 py-2">
               {services.map((service) => {
                 const isActive = activeService?.label === service.label;
                 return (
@@ -70,8 +75,7 @@ export function NavDropdown({ services, scrolled }: NavDropdownProps) {
                     key={service.label}
                     onMouseEnter={() => setActiveService(service)}
                     onClick={() => {
-                      window.location.href = service.href;
-                      setOpen(false);
+                      onNavigate?.();
                     }}
                     className={`flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left text-sm font-medium transition-colors duration-150 ${
                       isActive
@@ -79,7 +83,9 @@ export function NavDropdown({ services, scrolled }: NavDropdownProps) {
                         : 'text-ink-600 hover:bg-ink-100 hover:text-ink-800'
                     }`}
                   >
-                    <span>{service.label}</span>
+                    <Link to={service.href} onClick={() => setOpen(false)}>
+                      {service.label}
+                    </Link>
                     {(service.subServices?.length ?? 0) > 0 && (
                       <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-50" />
                     )}
@@ -103,15 +109,18 @@ export function NavDropdown({ services, scrolled }: NavDropdownProps) {
                       {activeService.label}
                     </p>
                     {activeService.subServices!.map((sub) => (
-                      <a
+                      <Link
                         key={sub.label}
-                        href={sub.href}
-                        onClick={() => setOpen(false)}
+                        to={sub.href}
+                        onClick={() => {
+                          setOpen(false);
+                          onNavigate?.();
+                        }}
                         className="flex items-center gap-2 px-5 py-2 text-sm text-ink-500 transition-colors duration-150 hover:text-brand-red"
                       >
                         <span className="h-1 w-1 shrink-0 rounded-full bg-brand-red/40" />
                         {sub.label}
-                      </a>
+                      </Link>
                     ))}
                   </motion.div>
                 ) : activeService ? (

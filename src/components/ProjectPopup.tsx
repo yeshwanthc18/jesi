@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { X, ArrowRight, Sparkles } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export function ProjectPopup() {
   const [open, setOpen] = useState(false);
@@ -78,14 +79,14 @@ export function ProjectPopup() {
                 ))}
               </div>
 
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 onClick={() => setOpen(false)}
                 className="group mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-red px-6 py-3 font-display text-sm font-semibold text-white transition-colors hover:bg-ink-800"
               >
                 Start your free BIM pilot
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
+              </Link>
               <button
                 onClick={() => setOpen(false)}
                 className="mt-2 w-full text-center text-xs text-ink-400 transition-colors hover:text-ink-600"

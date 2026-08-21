@@ -1,30 +1,30 @@
 import { motion } from 'framer-motion';
 import { useReveal } from '../hooks/useReveal';
+import type { ProcessStep } from '../lib/content/types';
 
-const steps = [
-  { number: '01', title: 'You send 2D', description: 'Upload PDF, DWG, or RFP — we receive and acknowledge within hours.' },
-  { number: '02', title: 'Scope & LOD review', description: 'We agree on LOD level, timeline, and BIM standards before modeling begins.' },
-  { number: '03', title: 'BIM modeling', description: 'Revit MEP modeling with full coordination across mechanical, electrical, and plumbing.' },
-  { number: '04', title: 'Clash check', description: 'Navisworks clash detection — every conflict documented and resolved before delivery.' },
-  { number: '05', title: 'QC sign-off', description: 'Senior engineer reviews the model, drawings, and schedules before release.' },
-  { number: '06', title: 'Delivery', description: 'RVT + DWG + PDF delivered on BIM 360 or ACC — ready for construction.' },
-];
+interface ProcessProps {
+  sectionId: string;
+  eyebrow: string;
+  titleLine1: string;
+  titleLine2: string;
+  steps: ProcessStep[];
+}
 
-export function Process() {
+export function Process({ sectionId, eyebrow, titleLine1, titleLine2, steps }: ProcessProps) {
   const { ref, inView } = useReveal();
 
   return (
-    <section id="process" className="bg-ink-50 py-16 lg:py-24">
+    <section id={sectionId} className="bg-ink-50 py-16 lg:py-24">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
         <div ref={ref} className={`reveal ${inView ? 'in-view' : ''} mb-12`}>
           <p className="mb-4 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.14em] text-brand-red">
             <span className="block h-px w-8 bg-brand-red" />
-            How it works
+            {eyebrow}
           </p>
           <h2 className="font-display text-3xl font-bold uppercase leading-tight tracking-tight text-ink-800 sm:text-4xl lg:text-5xl">
-            From 2D drawings to
+            {titleLine1}
             <br />
-            <span className="text-ink-400">coordinated BIM models.</span>
+            <span className="text-ink-400">{titleLine2}</span>
           </h2>
         </div>
 
@@ -38,9 +38,7 @@ export function Process() {
   );
 }
 
-type StepData = (typeof steps)[number];
-
-function ProcessCard({ step, index }: { step: StepData; index: number }) {
+function ProcessCard({ step, index }: { step: ProcessStep; index: number }) {
   const { ref, inView } = useReveal<HTMLDivElement>();
 
   return (

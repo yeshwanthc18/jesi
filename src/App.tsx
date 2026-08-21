@@ -1,35 +1,17 @@
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { Marquee } from './components/Marquee';
-import { ServiceDetail } from './components/ServiceDetail';
-import { Process } from './components/Process';
-import { Testimonials } from './components/Testimonials';
-import { FAQ } from './components/FAQ';
-import { CTA } from './components/CTA';
-import { Footer } from './components/Footer';
-import { ProjectPopup } from './components/ProjectPopup';
-import { ScrollProgress } from './components/ScrollProgress';
-import ServiceSection from './components/ServiceSection';
-import { services } from './data/services';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ServicePage } from './pages/ServicePage';
+import { ContactPage } from './pages/ContactPage';
 
 function App() {
   return (
-    <div className="relative min-h-screen bg-ink-50">
-      <ScrollProgress />
-      <ProjectPopup />
-      <Navbar />
-      <main>
-        <Hero />
-        <Marquee />
-        <ServiceSection />
-       <ServiceDetail service={services[0]} />
-        <Process />
-        <Testimonials />
-        <FAQ />
-        <CTA />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/services/bim-modeling" replace />} />
+        <Route path="/services/:slug" element={<ServicePage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

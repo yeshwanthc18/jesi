@@ -1,33 +1,41 @@
 import { Linkedin, Instagram, Twitter } from "lucide-react";
-
-const footerLinks = {
-  "BIM Services": [
-    "LOD 100–500 Modeling",
-    "Clash Detection",
-    "Shop Drawings",
-    "BOQ Schedules",
-    "As-built Models",
-    "RFI Management",
-  ],
-  Company: ["About JES", "Our Process", "Client Results", "FAQ"],
-  Resources: ["Revit MEP", "Navisworks", "BIM 360 / ACC", "Dynamo"],
-};
+import { Link } from "react-router-dom";
+import { allContent } from "../lib/content";
 
 export function Footer() {
+  const serviceLinks = allContent.map((c) => ({
+    label: c.label,
+    href: c.navHref,
+  }));
+
+  const footerLinks = {
+    "Services": serviceLinks,
+    Company: [
+      { label: "About JES", href: "#" },
+      { label: "Our Process", href: "#process" },
+      { label: "Client Results", href: "#clients" },
+      { label: "FAQ", href: "#faq" },
+    ],
+    Resources: [
+      { label: "Revit MEP", href: "#" },
+      { label: "Navisworks", href: "#" },
+      { label: "BIM 360 / ACC", href: "#" },
+      { label: "Dynamo", href: "#" },
+    ],
+  };
+
   return (
     <footer className="bg-ink-50 py-16">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
         <div className="grid gap-12 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <a href="#top" className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <img
                 src="/logo.png"
                 alt="JES Engineering"
                 className="h-12 w-auto"
               />
-
-             
-            </a>
+            </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-500">
               Federated MEP BIM models — LOD 100 to 500. Clash-free Revit
               coordination delivered on BIM 360 or ACC. Built by engineers, for
@@ -53,13 +61,13 @@ export function Footer() {
               </h4>
               <ul className="space-y-2.5">
                 {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
+                  <li key={link.label}>
+                    <Link
+                      to={link.href}
                       className="text-sm text-ink-500 transition-colors hover:text-brand-red"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -72,6 +80,9 @@ export function Footer() {
             © 2026 JES Engineering. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-ink-400">
+            <Link to="/contact" className="transition-colors hover:text-ink-800">
+              Contact Us
+            </Link>
             <a href="#" className="transition-colors hover:text-ink-800">
               Privacy Policy
             </a>
