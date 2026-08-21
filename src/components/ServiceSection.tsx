@@ -37,7 +37,7 @@ const stepsData: StepData[] = [
     lod: "01",
     stage: "Planning",
     title: "Planning & Design",
-    bgColor: "bg-[#0B2545]",
+    bgColor: "bg-[#A91E2D]",
     textColor: "text-white",
     features: [
       "Coordinated 3D Models (Arch / Struct / MEP)",
@@ -79,7 +79,7 @@ const stepsData: StepData[] = [
     lod: "02",
     stage: "Fabrication",
     title: "Construction & Fabrication",
-    bgColor: "bg-[#6A1B1B]",
+    bgColor: "bg-[#1F2020]",
     textColor: "text-white",
     features: [
       "Fabrication-Level Model Geometry & Metadata",
@@ -121,7 +121,7 @@ const stepsData: StepData[] = [
     lod: "03",
     stage: "Simulation",
     title: "Construction Simulation & Quantification",
-    bgColor: "bg-[#0D5C4A]",
+    bgColor: "bg-[#4A4A4A]",
     textColor: "text-white",
     features: [
       "Phased / Sequenced 4D Model",
@@ -164,7 +164,7 @@ const stepsData: StepData[] = [
     lod: "04",
     stage: "Modeling",
     title: "Parametric Revit Family Creation",
-    bgColor: "bg-gradient-to-b from-[#103B4A] to-[#071B28]",
+    bgColor: "bg-gradient-to-b from-[#003267] to-[#0d4e95]",
     textColor: "text-white",
     features: [
       "Custom Parametric Revit Families",
@@ -211,7 +211,7 @@ const stepsData: StepData[] = [
     lod: "05",
     stage: "Operations",
     title: "Operation & Maintenance",
-    bgColor: "bg-gradient-to-b from-[#2B2140] to-[#120C1F]",
+    bgColor: "bg-gradient-to-b from-[#A91E2D] to-[#c94350]",
     textColor: "text-white",
     features: [
       "Verified As-Built / Handover Model",
